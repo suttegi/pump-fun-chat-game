@@ -3,14 +3,12 @@ const { PumpChatClient } = require("pump-chat-client");
 
 const token = "5GAPXwP4dpELAeHCEPoDM6ZPPec4gCULXPga2FDp6UwE";
 
-// Создаём WebSocket сервер для фронта
 const wss = new WebSocket.Server({ port: 8080 });
 
 wss.on("connection", (ws) => {
   console.log("Фронт подключился к WebSocket");
 });
 
-// PumpFun клиент
 async function main() {
   const client = new PumpChatClient({
     roomId: token,
@@ -36,7 +34,6 @@ async function main() {
     });
   });
 
-  // Новые сообщения
   client.on("message", (msg) => {
     const payload = {
       user: msg.username || msg.user || msg.author,
@@ -50,7 +47,7 @@ async function main() {
   });
 
   client.on("error", (err) => {
-    console.error("Ошибка:", err);
+    console.error("error:", err);
   });
 
   await client.connect();

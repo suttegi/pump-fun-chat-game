@@ -16,7 +16,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 function App() {
   const [messages, setMessages] = useState([]);
   const [connectionStatus, setConnectionStatus] = useState("disconnected");
-  const [userWordCounts, setUserWordCounts] = useState({}); // { user: totalWordCount }
+  const [userWordCounts, setUserWordCounts] = useState({});
   const wsRef = useRef(null);
 
   useEffect(() => {
@@ -53,7 +53,6 @@ function App() {
     return () => wsRef.current && wsRef.current.close();
   }, []);
 
-  // данные для диаграммы
   const labels = Object.keys(userWordCounts);
   const values = Object.values(userWordCounts);
 
@@ -61,7 +60,7 @@ function App() {
     labels,
     datasets: [
       {
-        label: "Количество слов",
+        label: "word count",
         data: values,
         backgroundColor: labels.map(
           (_, i) => `hsl(${(i * 60) % 360}, 70%, 50%)`
@@ -74,7 +73,7 @@ function App() {
     responsive: true,
     plugins: {
       legend: { display: false },
-      title: { display: true, text: "Word Battle — рейтинг игроков" },
+      title: { display: true, text: "Word Battle — users rating" },
     },
     scales: {
       y: {
@@ -88,13 +87,13 @@ function App() {
     <div className="app">
       <header className="header">
         <h1>Word Battle Game</h1>
-        <p>Кто напишет больше слов — тот победит!</p>
+        <p>Whoever writes the most words will win.</p>
         <p className={`status ${connectionStatus}`}>Status: {connectionStatus}</p>
       </header>
 
       <div className="main">
         <div className="chart-card">
-          <h2 className="section-title">Диаграмма слов по юзерам</h2>
+          <h2 className="section-title">diagram</h2>
           <div className="chart">
             <Bar data={data} options={options} />
           </div>
